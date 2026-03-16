@@ -42,16 +42,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <div className="max-w-5xl mx-auto flex items-center justify-between">
               <div className="flex items-center gap-6">
                 <span className="font-bold text-gray-900">ALU Logo dApp</span>
-                <Link to="/verify"    className="text-sm text-gray-600 hover:text-gray-900">Verify</Link>
-                <Link to="/register"  className="text-sm text-gray-600 hover:text-gray-900">Register</Link>
-                <Link to="/dashboard" className="text-sm text-gray-600 hover:text-gray-900">Dashboard</Link>
+                <Link to="/verify" className="text-sm text-gray-600 hover:text-gray-900">
+                  Verify
+                </Link>
+                <Link to="/register" className="text-sm text-gray-600 hover:text-gray-900">
+                  Register
+                </Link>
+                <Link to="/dashboard" className="text-sm text-gray-600 hover:text-gray-900">
+                  Dashboard
+                </Link>
               </div>
               <WalletButton />
             </div>
           </nav>
-          <main className="max-w-5xl mx-auto px-6 py-8">
-            {children}
-          </main>
+          <main className="max-w-5xl mx-auto px-6 py-8">{children}</main>
         </WalletProvider>
         <ScrollRestoration />
         <Scripts />
@@ -72,9 +76,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   if (isRouteErrorResponse(error)) {
     message = error.status === 404 ? "404" : "Error";
     details =
-      error.status === 404
-        ? "The requested page could not be found."
-        : error.statusText || details;
+      error.status === 404 ? "The requested page could not be found." : error.statusText || details;
   } else if (import.meta.env.DEV && error && error instanceof Error) {
     details = error.message;
     stack = error.stack;

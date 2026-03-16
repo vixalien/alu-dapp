@@ -28,10 +28,8 @@ const readProvider = new JsonRpcProvider(
   { batchMaxCount: 1 },
 );
 
-export const getRegistryReadOnly = () =>
-  new Contract(REGISTRY_ADDRESS, REGISTRY_ABI, readProvider);
-export const getTokenReadOnly = () =>
-  new Contract(TOKEN_ADDRESS, TOKEN_ABI, readProvider);
+export const getRegistryReadOnly = () => new Contract(REGISTRY_ADDRESS, REGISTRY_ABI, readProvider);
+export const getTokenReadOnly = () => new Contract(TOKEN_ADDRESS, TOKEN_ABI, readProvider);
 export const getRegistryWithSigner = (signer: Signer) =>
   new Contract(REGISTRY_ADDRESS, REGISTRY_ABI, signer);
 export const getTokenWithSigner = (signer: Signer) =>

@@ -17,11 +17,11 @@ interface WalletState {
 const WalletContext = createContext<WalletState | null>(null);
 
 export function WalletProvider({ children }: { children: ReactNode }) {
-  const [address, setAddress]     = useState<string | null>(null);
-  const [signer, setSigner]       = useState<JsonRpcSigner | null>(null);
-  const [balance, setBalance]     = useState<string | null>(null);
+  const [address, setAddress] = useState<string | null>(null);
+  const [signer, setSigner] = useState<JsonRpcSigner | null>(null);
+  const [balance, setBalance] = useState<string | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
-  const [error, setError]         = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const connect = useCallback(async () => {
     setIsConnecting(true);
@@ -54,7 +54,9 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <WalletContext.Provider value={{ address, signer, balance, isConnecting, error, connect, disconnect }}>
+    <WalletContext.Provider
+      value={{ address, signer, balance, isConnecting, error, connect, disconnect }}
+    >
       {children}
     </WalletContext.Provider>
   );

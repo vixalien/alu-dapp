@@ -9,9 +9,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Real SHA-256 of the ALU logo file
 const logoPath = path.join(__dirname, "../assets/logo.png");
-const logoHash = "0x" + crypto.createHash("sha256")
-  .update(fs.readFileSync(logoPath))
-  .digest("hex");
+const logoHash = "0x" + crypto.createHash("sha256").update(fs.readFileSync(logoPath)).digest("hex");
 
 const WRONG_HASH = "0x" + "ab".repeat(32);
 const TOTAL_SUPPLY = 1_000_000n * 10n ** 18n;
@@ -35,7 +33,9 @@ describe("ALUAssetRegistry", function () {
   // Test 1
   it("registers the ALU logo and returns a token ID", async function () {
     const tokenId = await registry.registerAsset.staticCall(
-      "ALU Official Logo", "image/png", logoHash
+      "ALU Official Logo",
+      "image/png",
+      logoHash,
     );
     await registry.registerAsset("ALU Official Logo", "image/png", logoHash);
     expect(tokenId).to.equal(1n);
@@ -46,7 +46,7 @@ describe("ALUAssetRegistry", function () {
   it("rejects a duplicate content hash", async function () {
     await registry.registerAsset("ALU Official Logo", "image/png", logoHash);
     await expect(
-      registry.registerAsset("ALU Official Logo copy", "image/png", logoHash)
+      registry.registerAsset("ALU Official Logo copy", "image/png", logoHash),
     ).to.be.revertedWith("ALUAssetRegistry: asset already registered");
   });
 
@@ -128,9 +128,7 @@ describe("Frontend Hashing Utility", function () {
   // Test 10
   it("hashing function returns correct SHA-256 bytes32 for a known file", async function () {
     const fileBuffer = fs.readFileSync(logoPath);
-    const hash = "0x" + crypto.createHash("sha256")
-      .update(fileBuffer)
-      .digest("hex");
+    const hash = "0x" + crypto.createHash("sha256").update(fileBuffer).digest("hex");
     // Must be 0x-prefixed 64-char hex (bytes32 format)
     expect(hash).to.match(/^0x[0-9a-f]{64}$/);
     expect(hash).to.equal(logoHash);
@@ -171,7 +169,9 @@ describe("Frontend Verification Integration", function () {
       ? "Logo Verified — This is the authentic ALU logo"
       : "Warning: This logo has been modified or is not the official ALU logo";
     expect(valid).to.be.false;
-    expect(displayResult).to.equal("Warning: This logo has been modified or is not the official ALU logo");
+    expect(displayResult).to.equal(
+      "Warning: This logo has been modified or is not the official ALU logo",
+    );
   });
 });
 

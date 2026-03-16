@@ -53,12 +53,8 @@ export default function VerifyPage() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold text-gray-900 mb-1">
-        Logo Verification
-      </h1>
-      <p className="text-gray-500 mb-6">
-        Check whether a logo is authentic. No wallet required.
-      </p>
+      <h1 className="text-2xl font-bold text-gray-900 mb-1">Logo Verification</h1>
+      <p className="text-gray-500 mb-6">Check whether a logo is authentic. No wallet required.</p>
 
       {/* Tabs */}
       <div className="flex gap-2 mb-6 border-b border-gray-200">
@@ -104,9 +100,7 @@ export default function VerifyPage() {
           )}
           {computedHash && (
             <div className="bg-gray-50 rounded p-3">
-              <p className="text-xs text-gray-500 font-mono break-all">
-                SHA-256: {computedHash}
-              </p>
+              <p className="text-xs text-gray-500 font-mono break-all">SHA-256: {computedHash}</p>
             </div>
           )}
           <button
@@ -145,13 +139,9 @@ export default function VerifyPage() {
         <div className="mt-6 bg-green-50 border border-green-200 rounded-lg p-6">
           <div className="flex items-center gap-3 mb-3">
             <span className="text-3xl text-green-600">✓</span>
-            <h2 className="text-lg font-semibold text-green-800">
-              Logo Verified
-            </h2>
+            <h2 className="text-lg font-semibold text-green-800">Logo Verified</h2>
           </div>
-          <p className="text-green-700 font-medium mb-3">
-            This is the authentic ALU logo.
-          </p>
+          <p className="text-green-700 font-medium mb-3">This is the authentic ALU logo.</p>
           <dl className="text-sm text-green-700 space-y-1">
             <div>
               <dt className="inline font-medium">Name: </dt>

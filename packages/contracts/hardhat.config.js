@@ -11,12 +11,14 @@ export default defineConfig({
       evmVersion: "cancun",
     },
   },
-  networks: process.env.SEPOLIA_RPC_URL ? {
-    sepolia: {
-      type: "http",
-      chainId: 11155111,
-      url: process.env.SEPOLIA_RPC_URL,
-      accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
-    },
-  } : {},
+  networks: process.env.SEPOLIA_RPC_URL
+    ? {
+        sepolia: {
+          type: "http",
+          chainId: 11155111,
+          url: process.env.SEPOLIA_RPC_URL,
+          accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
+        },
+      }
+    : {},
 });

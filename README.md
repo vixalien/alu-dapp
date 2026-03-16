@@ -52,12 +52,14 @@ Open http://localhost:5173.
 ## Using the dApp
 
 ### Verify (no wallet needed)
+
 1. Go to `/verify`
 2. **Upload File tab:** drag or click to upload any PNG → the app hashes it client-side with the Web Crypto API and calls `verifyLogoIntegrity(1, hash)` on-chain
 3. **Paste Hash tab:** paste any `0x`-prefixed 64-char hex to verify directly
 4. Green = authentic ALU logo; Red = not authentic or modified
 
 ### Register (wallet required)
+
 1. Go to `/register`
 2. Connect MetaMask (Sepolia network)
 3. Upload a file → hash is computed in-browser
@@ -65,6 +67,7 @@ Open http://localhost:5173.
 5. On success, the token ID and transaction hash are displayed
 
 ### Dashboard (wallet required)
+
 1. Go to `/dashboard`
 2. Connect MetaMask
 3. Displays total supply (1,000,000 ALUT), your balance, and your ownership percentage

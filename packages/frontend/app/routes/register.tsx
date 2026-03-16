@@ -42,17 +42,12 @@ export default function RegisterPage() {
       const event = receipt.logs
         .map((log: unknown) => {
           try {
-            return registry.interface.parseLog(
-              log as { topics: string[]; data: string },
-            );
+            return registry.interface.parseLog(log as { topics: string[]; data: string });
           } catch {
             return null;
           }
         })
-        .find(
-          (e: unknown) =>
-            (e as { name?: string } | null)?.name === "AssetRegistered",
-        );
+        .find((e: unknown) => (e as { name?: string } | null)?.name === "AssetRegistered");
       setResult({
         tokenId: event?.args?.tokenId?.toString() ?? "1",
         txHash: receipt.hash,
@@ -74,9 +69,7 @@ export default function RegisterPage() {
   if (!address) {
     return (
       <div className="max-w-2xl mx-auto text-center py-16">
-        <p className="text-gray-500">
-          Connect your wallet to register an asset.
-        </p>
+        <p className="text-gray-500">Connect your wallet to register an asset.</p>
       </div>
     );
   }
@@ -84,15 +77,11 @@ export default function RegisterPage() {
   return (
     <div className="max-w-2xl mx-auto space-y-4">
       <h1 className="text-2xl font-bold text-gray-900 mb-1">Register Asset</h1>
-      <p className="text-gray-500 mb-6">
-        Register a logo on the blockchain as an NFT.
-      </p>
+      <p className="text-gray-500 mb-6">Register a logo on the blockchain as an NFT.</p>
 
       {/* Step 1 */}
       <div className="bg-white border border-gray-200 rounded-lg p-6">
-        <h2 className="font-semibold text-gray-900 mb-3">
-          Step 1 — Upload File
-        </h2>
+        <h2 className="font-semibold text-gray-900 mb-3">Step 1 — Upload File</h2>
         <div
           onClick={() => fileRef.current?.click()}
           className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-400"
@@ -115,9 +104,7 @@ export default function RegisterPage() {
         )}
         {hash && (
           <div className="mt-3 bg-gray-50 rounded p-3">
-            <p className="text-xs text-gray-500 font-mono break-all">
-              SHA-256: {hash}
-            </p>
+            <p className="text-xs text-gray-500 font-mono break-all">SHA-256: {hash}</p>
           </div>
         )}
       </div>
@@ -127,13 +114,9 @@ export default function RegisterPage() {
         onSubmit={handleRegister}
         className="bg-white border border-gray-200 rounded-lg p-6 space-y-4"
       >
-        <h2 className="font-semibold text-gray-900">
-          Step 2 — Register on Blockchain
-        </h2>
+        <h2 className="font-semibold text-gray-900">Step 2 — Register on Blockchain</h2>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Asset Name
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Asset Name</label>
           <input
             type="text"
             placeholder="e.g. ALU Official Logo 2026"
@@ -144,9 +127,7 @@ export default function RegisterPage() {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            File Type
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">File Type</label>
           <input
             type="text"
             value={fileType}
@@ -177,12 +158,8 @@ export default function RegisterPage() {
 
       {result && (
         <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-          <p className="text-green-800 font-medium">
-            Registered — Token #{result.tokenId}
-          </p>
-          <p className="text-sm text-green-700 font-mono mt-1 break-all">
-            Tx: {result.txHash}
-          </p>
+          <p className="text-green-800 font-medium">Registered — Token #{result.tokenId}</p>
+          <p className="text-sm text-green-700 font-mono mt-1 break-all">Tx: {result.txHash}</p>
         </div>
       )}
       {error && (

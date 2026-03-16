@@ -17,24 +17,18 @@ export default function DashboardPage() {
   const [myBalance, setMyBalance] = useState("");
   const [myPct, setMyPct] = useState("");
   const [ownerAddr, setOwnerAddr] = useState("");
-  const [holders, setHolders] = useState<
-    { address: string; balance: string; pct: string }[]
-  >([]);
+  const [holders, setHolders] = useState<{ address: string; balance: string; pct: string }[]>([]);
   const [recipient, setRecipient] = useState("");
   const [amount, setAmount] = useState("");
   const [isDistributing, setIsDistributing] = useState(false);
   const [distError, setDistError] = useState<string | null>(null);
   const [distSuccess, setDistSuccess] = useState<string | null>(null);
 
-  const isOwner =
-    address && ownerAddr && address.toLowerCase() === ownerAddr.toLowerCase();
+  const isOwner = address && ownerAddr && address.toLowerCase() === ownerAddr.toLowerCase();
 
   const fetchData = useCallback(async () => {
     const token = getTokenReadOnly();
-    const [supply, owner] = await Promise.all([
-      token.totalSupply(),
-      token.owner(),
-    ]);
+    const [supply, owner] = await Promise.all([token.totalSupply(), token.owner()]);
     setTotalSupply(formatEther(supply as bigint));
     setOwnerAddr(owner as string);
 
@@ -60,9 +54,7 @@ export default function DashboardPage() {
         };
       }),
     );
-    setHolders(
-      holderData.filter((h) => parseFloat(h.balance.replace(/,/g, "")) > 0),
-    );
+    setHolders(holderData.filter((h) => parseFloat(h.balance.replace(/,/g, "")) > 0));
   }, [address]);
 
   useEffect(() => {
@@ -88,9 +80,7 @@ export default function DashboardPage() {
       const token = getTokenWithSigner(signer);
       const tx = await token.distributeShares(recipient, wei);
       await tx.wait();
-      setDistSuccess(
-        `Sent ${amount} ALUT to ${recipient.slice(0, 6)}...${recipient.slice(-4)}`,
-      );
+      setDistSuccess(`Sent ${amount} ALUT to ${recipient.slice(0, 6)}...${recipient.slice(-4)}`);
       setRecipient("");
       setAmount("");
       await fetchData();
@@ -107,9 +97,7 @@ export default function DashboardPage() {
   if (!address) {
     return (
       <div className="max-w-2xl mx-auto text-center py-16">
-        <p className="text-gray-500">
-          Connect your wallet to view the dashboard.
-        </p>
+        <p className="text-gray-500">Connect your wallet to view the dashboard.</p>
       </div>
     );
   }
@@ -131,10 +119,7 @@ export default function DashboardPage() {
           },
           { label: "Your Ownership", value: `${myPct || "0"}%` },
         ].map(({ label, value }) => (
-          <div
-            key={label}
-            className="bg-white border border-gray-200 rounded-lg p-4"
-          >
+          <div key={label} className="bg-white border border-gray-200 rounded-lg p-4">
             <p className="text-sm text-gray-500">{label}</p>
             <p className="text-xl font-bold text-gray-900 mt-1">{value}</p>
           </div>
@@ -149,15 +134,9 @@ export default function DashboardPage() {
         <table className="w-full text-sm">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-gray-500 font-medium">
-                Address
-              </th>
-              <th className="px-6 py-3 text-right text-gray-500 font-medium">
-                Balance
-              </th>
-              <th className="px-6 py-3 text-right text-gray-500 font-medium">
-                Ownership
-              </th>
+              <th className="px-6 py-3 text-left text-gray-500 font-medium">Address</th>
+              <th className="px-6 py-3 text-right text-gray-500 font-medium">Balance</th>
+              <th className="px-6 py-3 text-right text-gray-500 font-medium">Ownership</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
@@ -166,9 +145,7 @@ export default function DashboardPage() {
                 <td className="px-6 py-3 font-mono text-gray-700">
                   {h.address.slice(0, 6)}...{h.address.slice(-4)}
                 </td>
-                <td className="px-6 py-3 text-right text-gray-700">
-                  {h.balance} ALUT
-                </td>
+                <td className="px-6 py-3 text-right text-gray-700">{h.balance} ALUT</td>
                 <td className="px-6 py-3 text-right text-gray-700">{h.pct}%</td>
               </tr>
             ))}
@@ -179,9 +156,7 @@ export default function DashboardPage() {
       {/* Distribute (owner only) */}
       {isOwner && (
         <div className="bg-white border border-gray-200 rounded-lg p-6">
-          <h2 className="font-semibold text-gray-900 mb-4">
-            Distribute Shares
-          </h2>
+          <h2 className="font-semibold text-gray-900 mb-4">Distribute Shares</h2>
           <form onSubmit={handleDistribute} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -197,9 +172,7 @@ export default function DashboardPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Amount (ALUT)
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Amount (ALUT)</label>
               <input
                 type="number"
                 placeholder="e.g. 100000"
@@ -218,12 +191,8 @@ export default function DashboardPage() {
               {isDistributing ? "Waiting for MetaMask..." : "Distribute Shares"}
             </button>
           </form>
-          {distSuccess && (
-            <p className="mt-3 text-green-700 text-sm">{distSuccess}</p>
-          )}
-          {distError && (
-            <p className="mt-3 text-red-700 text-sm">{distError}</p>
-          )}
+          {distSuccess && <p className="mt-3 text-green-700 text-sm">{distSuccess}</p>}
+          {distError && <p className="mt-3 text-red-700 text-sm">{distError}</p>}
         </div>
       )}
     </div>
