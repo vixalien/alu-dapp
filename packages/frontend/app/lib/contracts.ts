@@ -1,4 +1,5 @@
-import { Contract, JsonRpcProvider, Signer } from "ethers";
+import { Contract, JsonRpcProvider } from "ethers";
+import type { Signer } from "ethers";
 
 // Update after deploying to Sepolia
 export const REGISTRY_ADDRESS = "0xYOUR_REGISTRY_ADDRESS";

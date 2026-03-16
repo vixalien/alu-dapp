@@ -1,4 +1,5 @@
-import { BrowserProvider, JsonRpcSigner } from "ethers";
+import { BrowserProvider } from "ethers";
+import type { JsonRpcSigner } from "ethers";
 
 declare global {
   interface Window {
