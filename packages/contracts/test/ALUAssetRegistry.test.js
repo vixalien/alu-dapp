@@ -114,4 +114,89 @@ describe("ALULogoToken", function () {
     expect(await token.ownershipPercentage(alice.address)).to.equal(50n);
     expect(await token.ownershipPercentage(owner.address)).to.equal(50n);
   });
+
+  // Test 9
+  it("frontend reads totalSupply as 1,000,000 ALUT", async function () {
+    const supply = await token.totalSupply();
+    expect(supply).to.equal(TOTAL_SUPPLY);
+    const humanReadable = ethers.formatEther(supply);
+    expect(humanReadable).to.equal("1000000.0");
+  });
+});
+
+describe("Frontend Hashing Utility", function () {
+  // Test 10
+  it("hashing function returns correct SHA-256 bytes32 for a known file", async function () {
+    const fileBuffer = fs.readFileSync(logoPath);
+    const hash = "0x" + crypto.createHash("sha256")
+      .update(fileBuffer)
+      .digest("hex");
+    // Must be 0x-prefixed 64-char hex (bytes32 format)
+    expect(hash).to.match(/^0x[0-9a-f]{64}$/);
+    expect(hash).to.equal(logoHash);
+  });
+});
+
+describe("Frontend Verification Integration", function () {
+  let ethers;
+  let registry;
+  let owner;
+
+  before(async function () {
+    ({ ethers } = await network.connect());
+    [owner] = await ethers.getSigners();
+  });
+
+  beforeEach(async function () {
+    const Factory = await ethers.getContractFactory("ALUAssetRegistry");
+    registry = await Factory.deploy();
+    await registry.waitForDeployment();
+    await registry.registerAsset("ALU Official Logo", "image/png", logoHash);
+  });
+
+  // Test 11
+  it("verifyLogoIntegrity with correct hash displays success result", async function () {
+    const [valid] = await registry.verifyLogoIntegrity(1, logoHash);
+    const displayResult = valid
+      ? "Logo Verified — This is the authentic ALU logo"
+      : "Warning: This logo has been modified or is not the official ALU logo";
+    expect(valid).to.be.true;
+    expect(displayResult).to.equal("Logo Verified — This is the authentic ALU logo");
+  });
+
+  // Test 12
+  it("verifyLogoIntegrity with wrong hash displays failure result", async function () {
+    const [valid] = await registry.verifyLogoIntegrity(1, WRONG_HASH);
+    const displayResult = valid
+      ? "Logo Verified — This is the authentic ALU logo"
+      : "Warning: This logo has been modified or is not the official ALU logo";
+    expect(valid).to.be.false;
+    expect(displayResult).to.equal("Warning: This logo has been modified or is not the official ALU logo");
+  });
+});
+
+describe("Frontend Token Distribution Integration", function () {
+  let ethers;
+  let token;
+  let owner, recipient;
+
+  before(async function () {
+    ({ ethers } = await network.connect());
+    [owner, recipient] = await ethers.getSigners();
+  });
+
+  beforeEach(async function () {
+    const Factory = await ethers.getContractFactory("ALULogoToken");
+    token = await Factory.deploy(owner.address);
+    await token.waitForDeployment();
+  });
+
+  // Test 13
+  it("distributeShares correctly updates recipient balance after transfer", async function () {
+    const amount = ethers.parseEther("250000");
+    expect(await token.balanceOf(recipient.address)).to.equal(0n);
+    await token.distributeShares(recipient.address, amount);
+    expect(await token.balanceOf(recipient.address)).to.equal(amount);
+    expect(await token.ownershipPercentage(recipient.address)).to.equal(25n);
+  });
 });
