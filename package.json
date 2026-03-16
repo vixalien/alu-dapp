@@ -1,0 +1,11 @@
+{
+  "name": "alu-dapp",
+  "private": true,
+  "scripts": {
+    "test": "pnpm --filter contracts test",
+    "dev": "pnpm --filter frontend dev",
+    "build": "pnpm --filter frontend build",
+    "deploy:local": "pnpm --filter contracts deploy:local",
+    "deploy:sepolia": "pnpm --filter contracts deploy:sepolia"
+  }
+}
