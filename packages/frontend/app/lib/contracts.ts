@@ -25,10 +25,14 @@ const TOKEN_ABI = [
 const readProvider = new JsonRpcProvider(
   import.meta.env.VITE_RPC_URL || "https://sepolia.drpc.org",
   undefined,
-  { batchMaxCount: 1 }
+  { batchMaxCount: 1 },
 );
 
-export const getRegistryReadOnly = () => new Contract(REGISTRY_ADDRESS, REGISTRY_ABI, readProvider);
-export const getTokenReadOnly    = () => new Contract(TOKEN_ADDRESS, TOKEN_ABI, readProvider);
-export const getRegistryWithSigner = (signer: Signer) => new Contract(REGISTRY_ADDRESS, REGISTRY_ABI, signer);
-export const getTokenWithSigner    = (signer: Signer) => new Contract(TOKEN_ADDRESS, TOKEN_ABI, signer);
+export const getRegistryReadOnly = () =>
+  new Contract(REGISTRY_ADDRESS, REGISTRY_ABI, readProvider);
+export const getTokenReadOnly = () =>
+  new Contract(TOKEN_ADDRESS, TOKEN_ABI, readProvider);
+export const getRegistryWithSigner = (signer: Signer) =>
+  new Contract(REGISTRY_ADDRESS, REGISTRY_ABI, signer);
+export const getTokenWithSigner = (signer: Signer) =>
+  new Contract(TOKEN_ADDRESS, TOKEN_ABI, signer);

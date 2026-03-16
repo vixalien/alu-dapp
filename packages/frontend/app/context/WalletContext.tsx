@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react";
 import type { JsonRpcSigner } from "ethers";
 import { formatEther } from "ethers";
 import { connectWallet, isMetaMaskInstalled } from "~/lib/wallet";
@@ -37,6 +37,14 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     } finally {
       setIsConnecting(false);
     }
+  }, []);
+
+  // Auto-connect if MetaMask already has permission (no popup)
+  useEffect(() => {
+    if (!isMetaMaskInstalled()) return;
+    window.ethereum!.request({ method: "eth_accounts" }).then((accounts) => {
+      if ((accounts as string[]).length > 0) connect();
+    });
   }, []);
 
   const disconnect = useCallback(() => {
