@@ -20,10 +20,8 @@ The frontend uses **ethers.js v6** with a read-only `JsonRpcProvider` for public
 
 ## Contract Addresses (Sepolia)
 
-> Update these after deploying with `pnpm --filter @alu-dapp/contracts deploy:sepolia`.
-
-- ALUAssetRegistry: `0xYOUR_REGISTRY_ADDRESS`
-- ALULogoToken: `0xYOUR_TOKEN_ADDRESS`
+- ALUAssetRegistry: `0xd8a344B144E4C0E088004c700Bd7E64bB4bF51B3`
+- ALULogoToken: `0x5bE346e6F0F5876288c9121d1C32F259a83E5157`
 
 ## Setup
 

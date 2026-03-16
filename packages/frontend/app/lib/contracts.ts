@@ -1,9 +1,8 @@
 import { Contract, JsonRpcProvider } from "ethers";
 import type { Signer } from "ethers";
 
-// Update after deploying to Sepolia
-export const REGISTRY_ADDRESS = "0xYOUR_REGISTRY_ADDRESS";
-export const TOKEN_ADDRESS = "0xYOUR_TOKEN_ADDRESS";
+export const REGISTRY_ADDRESS = "0xd8a344B144E4C0E088004c700Bd7E64bB4bF51B3";
+export const TOKEN_ADDRESS = "0x5bE346e6F0F5876288c9121d1C32F259a83E5157";
 
 const REGISTRY_ABI = [
   "function registerAsset(string name, string fileType, bytes32 contentHash) external returns (uint256)",
