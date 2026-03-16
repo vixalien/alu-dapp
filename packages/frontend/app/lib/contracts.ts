@@ -21,8 +21,11 @@ const TOKEN_ABI = [
 ];
 
 // Read-only — no wallet needed (used on verify page)
+// batchMaxCount: 1 prevents ethers from batching calls, which hits free-tier limits
 const readProvider = new JsonRpcProvider(
-  import.meta.env.VITE_RPC_URL || "https://sepolia.drpc.org"
+  import.meta.env.VITE_RPC_URL || "https://sepolia.drpc.org",
+  undefined,
+  { batchMaxCount: 1 }
 );
 
 export const getRegistryReadOnly = () => new Contract(REGISTRY_ADDRESS, REGISTRY_ABI, readProvider);
